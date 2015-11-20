@@ -1,4 +1,4 @@
 from Solution import Solution
 
 s = Solution()
-print s.addTwoNumbers(l1=[2,4],l2=[5,6,4])
+print s.findMedianSortedArrays(nums1=[2,3,4],nums2=[3,5,6])

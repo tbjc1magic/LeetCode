@@ -1,63 +1,42 @@
+import numpy
 class Solution(object):
-    def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
 
-        one1 = l1
-        one2 = l2
+    def findMedianSortedArrays(self,nums1, nums2):
+        nums = []
 
-        extra = 0
+        idx1 = 0
+        idx2 = 0
 
-        results = []
+        while 1:
 
-        list1 = []
-        list2 = []
+            if idx1 >= len(nums1):
+                nums+=nums2[idx2:]
+                break
 
-        while one1:
-            list1.append(one1.val)
-            one1 = one1.next
+            if idx2 >= len(nums2):
+                nums+=nums1[idx1:]
+                break
 
-        while one2:
-            list2.append(one2.val)
-            one2 = one2.next
-
-        len1= len(list1)
-        len2= len(list2)
-
-        longer = None
-        shorter = None
-
-        if len1>= len2:
-            l = list1
-            s = list2
-        else:
-            l = list2
-            s = list1
-
-        extra = 0
-        results = []
-        for i in range(max([len1,len2])):
-
-            ####within the lenght of the shorter#####
             try:
-                tmp = l[i] + s[i] +extra
-
-            #####outside the length of the shorter###
+                if nums1[idx1] > nums2[idx2]:
+                    nums.append(nums2[idx2])
+                    idx2+=1
+                else:
+                    nums.append(nums1[idx1])
+                    idx1+=1
             except:
-                tmp = l[i] +extra
+                print idx1,idx2
+        print nums1, nums2
+        print nums
 
-            if tmp>9:
-                tmp = tmp-10
-                extra = 1
-            else:
-                extra = 0
+        mm = None
 
-            results.append(tmp)
+        if len(nums)%2 ==1:
+            idx = (len(nums)+1)/2-1
+            mm = nums[idx]
+        else:
+            idx1 = len(nums)/2
+            idx2 = idx1-1
+            mm=(nums[idx1]+nums[idx2])/2.0
 
-        if extra >0:
-            results.append(1)
-
-        return results
+        return mm
