@@ -1,63 +1,31 @@
 class Solution(object):
-    def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
+    def longestSubstring(self, s):
 
-        one1 = l1
-        one2 = l2
+        if len(s) ==0 or len(s) ==1:
+            return len(s)
 
-        extra = 0
+        results = {"firstIdx":0, "secondIdx":0}
 
-        results = []
+        fIdx = results["firstIdx"]
+        sIdx = 0
 
-        list1 = []
-        list2 = []
+        while 1:
+            for sIdx in range(fIdx,len(s)):
+                if s[sIdx] in s[fIdx:sIdx]:
+                    if results["secondIdx"]-results["firstIdx"]< sIdx-fIdx:
+                        results["firstIdx"] = fIdx
+                        results["secondIdx"] = sIdx
+                        print results,fIdx
 
-        while one1:
-            list1.append(one1.val)
-            one1 = one1.next
+                    print s[fIdx:sIdx]
+                    fIdx = s[fIdx:sIdx].find(s[sIdx])+1+fIdx
+                    break
 
-        while one2:
-            list2.append(one2.val)
-            one2 = one2.next
+            if sIdx == len(s)-1:
+                if results["secondIdx"]-results["firstIdx"]< sIdx-fIdx+1:
+                    results["firstIdx"] = fIdx
+                    results["secondIdx"] = sIdx+1
+                break
 
-        len1= len(list1)
-        len2= len(list2)
-
-        longer = None
-        shorter = None
-
-        if len1>= len2:
-            l = list1
-            s = list2
-        else:
-            l = list2
-            s = list1
-
-        extra = 0
-        results = []
-        for i in range(max([len1,len2])):
-
-            ####within the lenght of the shorter#####
-            try:
-                tmp = l[i] + s[i] +extra
-
-            #####outside the length of the shorter###
-            except:
-                tmp = l[i] +extra
-
-            if tmp>9:
-                tmp = tmp-10
-                extra = 1
-            else:
-                extra = 0
-
-            results.append(tmp)
-
-        if extra >0:
-            results.append(1)
-
-        return results
+        print results
+        return -results["firstIdx"]+results["secondIdx"]
